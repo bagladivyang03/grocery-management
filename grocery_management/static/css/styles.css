@@ -1,0 +1,58 @@
+
+
+
+
+body{
+    /* background: url(../images/g1.jpg); */
+    background-image: linear-gradient(to right bottom,rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),url('/static/images/g1.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.border-md {
+    border-width: 2px;
+}
+
+
+
+h1{
+    color: white;
+}
+
+h5{
+    color: rgb(0, 140, 255);
+}
+
+
+#login-box{
+    padding-left: 0%;
+    padding-top: 10%;
+    padding-right: 20%;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.form-control:not(select) {
+    padding: 1.5rem 0.5rem;
+}
+
+select.form-control {
+    height: 52px;
+    padding-left: 0.5rem;
+}
+
+.form-control::placeholder {
+    color: #ccc;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.form-control:focus {
+    box-shadow: none;
+}
+
+h1,p{
+    text-align: center;
+}
