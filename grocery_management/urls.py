@@ -8,4 +8,5 @@ app_name = 'grocery_management'
 urlpatterns = [
     path('register/',views.register,name='register'),
     path('login/',views.user_login,name='login'),
+    
 ]

@@ -43,7 +43,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 (request,user)
-                return HttpResponse("Login Succesfull!!!")
+                return render(request,"grocery_management/homepage.html")
             else:
                 return HttpResponse("Account doesn't exists")
         else:
@@ -51,3 +51,9 @@ def user_login(request):
             print("Username: {} and password {}".format(username,password))
             return HttpResponse("invalid login details supplied!")
     return render(request,'grocery_management/login.html')
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('grocery_management:login'))
