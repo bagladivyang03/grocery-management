@@ -46,7 +46,7 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home
+                    <a class="nav-link" href="{% url 'grocery_management:homepage' %}">Home
                       <span class="sr-only">(current)</span>
                     </a>
                 </li> 
@@ -54,12 +54,12 @@
                 <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="checkout.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a></li>
 
-                <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'grocery_management:contactus' %}">Contact Us</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list fa-lg" aria-hidden="true"></i></a>
                     
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="about-us.html">About Us</a>
+                      <a class="dropdown-item" href="{% url 'grocery_management:aboutus' %}">About Us</a>
                       <a class="dropdown-item" href="terms.html">View Profile</a>
                       <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                     </div>
@@ -76,6 +76,18 @@
 
     {% endblock %}
 
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="inner-content">
+              <p>Copyright © 2020 Grocery Management System</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </footer>
 
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>

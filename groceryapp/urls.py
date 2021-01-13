@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('grocery_management/',include('grocery_management.urls')),
     path('logout/',views.user_logout,name='logout'),
+
 ]
