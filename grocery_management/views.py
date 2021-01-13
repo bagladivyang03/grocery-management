@@ -1,10 +1,12 @@
 from django.shortcuts import render,redirect
-from grocery_management.forms import UserForm, CustomerInfoForm
+from grocery_management.forms import UserForm, CustomerInfoForm, ContactUsForm
 
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
+from django.core.mail import send_mail
 # Create your views here.
 
 def register(request):
@@ -57,3 +59,36 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('grocery_management:login'))
+
+
+class AboutView(TemplateView):
+    template_name = 'grocery_management/about.html'
+
+
+class HomePageView(TemplateView):
+    template_name = 'grocery_management/homepage.html'
+
+# class ContactUsView(TemplateView):
+#     template_name = 'grocery_management/contactus.html'
+
+
+def contact_us(request):
+
+    message_sent = False;
+    if request.method == "POST":
+        contact_us_form = ContactUsForm(data = request.POST)
+
+        if contact_us_form.is_valid():
+
+            sender_name = contact_us_form.cleaned_data['fullname']
+            sender_email = contact_us_form.cleaned_data['email']
+
+            message = "{0} has sent you a new message:\n\n{1}".format(sender_name,contact_us_form.cleaned_data['subject'], contact_us_form.cleaned_data['message'])
+            send_mail('New Enquiry', message, sender_email, ['bagladivyang03@gmail.com'])
+            contact_us_form.save()
+            message_sent = True
+    else:
+        contact_us_form = ContactUsForm()
+    
+    return render(request,'grocery_management/contactus.html',{'contact_us_form' : contact_us_form,'message_sent':message_sent})
+            

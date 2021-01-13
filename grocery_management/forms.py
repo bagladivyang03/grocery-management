@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from grocery_management.models import CustomerRegistration
+from grocery_management.models import CustomerRegistration,MessageUsInfo
 
 class UserForm(forms.ModelForm):
     # password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control bg-white border-left-0 border-md','placeholder':'Password'}))
@@ -27,3 +27,13 @@ class CustomerInfoForm(forms.ModelForm):
         }
 
     
+class ContactUsForm(forms.ModelForm):
+    class Meta():
+        model = MessageUsInfo
+        fields = ('fullname','email','subject','message')
+        widgets = {
+            'fullname': forms.TextInput(attrs={'class':'form-control' ,'id':'name' ,'placeholder':'Full Name'}),
+            'email': forms.EmailInput(attrs={'class':'form-control' ,'id':'email', 'placeholder':'E-Mail Address'}),
+            'subject': forms.TextInput(attrs={'class':'form-control' ,'id':'subject', 'placeholder':'Subject'}),
+            'message': forms.TextInput(attrs={'rows':'6', 'class':'form-control' ,'id':'message', 'placeholder':'Your Message'}),
+        }

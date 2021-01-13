@@ -134,3 +134,5 @@ STATICFILES_DIR = [STATIC_DIR,]
 STATIC_ROOT= '/static/'
 
 LOGIN_URL = '/grocery_management/login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

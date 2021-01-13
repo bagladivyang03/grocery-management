@@ -13,6 +13,13 @@ class CustomerRegistration(models.Model):
     def __str__(self):
         return self.user.username
 
+
+class MessageUsInfo(models.Model):
+    fullname = models.CharField(max_length=50)
+    email = models.EmailField(max_length=254)
+    subject = models.CharField(max_length=50)
+    message = models.CharField(max_length=1000)
+    
     
 
 
