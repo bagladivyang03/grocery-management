@@ -92,3 +92,6 @@ def contact_us(request):
     
     return render(request,'grocery_management/contactus.html',{'contact_us_form' : contact_us_form,'message_sent':message_sent})
             
+
+# class view_profile(TemplateView):
+#     template_name = 'grocery_management/viewprofile.html'

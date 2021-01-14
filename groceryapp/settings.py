@@ -136,3 +136,11 @@ STATIC_ROOT= '/static/'
 LOGIN_URL = '/grocery_management/login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_HOST = 'in-v3.mailjet.com'
+# EMAIL_HOST_USER = '777d3ae2699760a69cde89f7453b15a0'
+# EMAIL_HOST_PASSWORD = 'c11abf87dcbcbdee76ed7aaf58b47d21'
+# EMAIL_PORT = '25'
+
+# MAILJET_API_KEY = 'API-KEY'
+# MAILJET_API_SECRET = 'API-SECRET'
