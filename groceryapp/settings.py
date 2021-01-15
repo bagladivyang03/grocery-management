@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'grocery_management',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +145,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # MAILJET_API_KEY = 'API-KEY'
 # MAILJET_API_SECRET = 'API-SECRET'
+
+
+# git push --set-upstream origin divyang

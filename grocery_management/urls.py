@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path,include,re_path
 from grocery_management import views
 from django.urls import reverse_lazy
 
@@ -12,5 +12,5 @@ urlpatterns = [
     path('home/',views.HomePageView.as_view(),name='homepage'),
     # path('contactus/',views.ContactUsView.as_view(),name='contactus'),
     path('contactus/',views.contact_us,name='contactus'),
-    # path('viewprofile/',views.view_profile.as_view(),name='viewprofile'),
+    path('viewprofile/',views.view_profile,name='viewprofile'),
 ]
