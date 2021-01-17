@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from grocery_management.forms import UserForm, CustomerInfoForm, ContactUsForm
 from grocery_management.models import CustomerRegistration
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
