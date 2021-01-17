@@ -50,8 +50,8 @@
                     </a>
                 </li> 
 
-                <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
-                <li class="nav-item"><a class="nav-link" href="checkout.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'grocery_management:productview' %}">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'grocery_management:cartview' %}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a></li>
 
                 <li class="nav-item"><a class="nav-link" href="{% url 'grocery_management:contactus' %}">Contact Us</a></li>
                 <li class="nav-item dropdown">

@@ -114,3 +114,11 @@ def view_profile(request):
     print(customer_info)
     print(customer_info.street)
     return render(request,'grocery_management/viewprofile.html',{'customer_info':customer_info})
+
+
+class CartView(TemplateView):
+    template_name = 'grocery_management/cart.html'
+
+
+class ProductView(TemplateView):
+    template_name = 'grocery_management/products.html'
