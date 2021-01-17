@@ -10,7 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
+
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,6 +35,15 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# SMTP EMAIL SETTINGS
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env("EMAIL")
+EMAIL_HOST_PASSWORD = env("PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'grocery_management',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -135,7 +151,7 @@ STATIC_ROOT= '/static/'
 
 LOGIN_URL = '/grocery_management/login'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # EMAIL_HOST = 'in-v3.mailjet.com'
 # EMAIL_HOST_USER = '777d3ae2699760a69cde89f7453b15a0'
@@ -144,3 +160,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # MAILJET_API_KEY = 'API-KEY'
 # MAILJET_API_SECRET = 'API-SECRET'
+
+
+# git push --set-upstream origin divyang
