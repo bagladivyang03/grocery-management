@@ -10,7 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
+
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +33,15 @@ SECRET_KEY = '2!=lz&7)zr5)lu$83^ayj1z$ida^j%35kaopqd964nd^hh6rr1'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+
+# SMTP EMAIL SETTINGS
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env("EMAIL")
+EMAIL_HOST_PASSWORD = env("PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 
 # Application definition
@@ -136,7 +151,7 @@ STATIC_ROOT= '/static/'
 
 LOGIN_URL = '/grocery_management/login'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # EMAIL_HOST = 'in-v3.mailjet.com'
 # EMAIL_HOST_USER = '777d3ae2699760a69cde89f7453b15a0'

@@ -9,6 +9,8 @@ from django.views.generic import TemplateView
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from .serializer import CustomerRegistrationSerializer
+from django.contrib import messages
+from . import mailhandler
 # Create your views here.
 
 def register(request):
@@ -79,7 +81,7 @@ class HomePageView(TemplateView):
 # class ContactUsView(TemplateView):
 #     template_name = 'grocery_management/contactus.html'
 
-
+@login_required
 def contact_us(request):
 
     message_sent = False;
@@ -90,9 +92,12 @@ def contact_us(request):
 
             sender_name = contact_us_form.cleaned_data['fullname']
             sender_email = contact_us_form.cleaned_data['email']
-
-            message = "{0} has sent you a new message:\n\n{1}".format(sender_name,contact_us_form.cleaned_data['subject'], contact_us_form.cleaned_data['message'])
-            send_mail('New Enquiry', message, sender_email, ['bagladivyang03@gmail.com'])
+            sender_subject = contact_us_form.cleaned_data['subject']
+            sender_message = contact_us_form.cleaned_data['message']
+            mailhandler.sendMailToUser(sender_name,sender_email)
+            mailhandler.sendMailToGMS(sender_name,sender_email,sender_subject,sender_message)
+            # message = "{0} has sent you a new message:\n\n{1}".format(sender_name,contact_us_form.cleaned_data['subject'], contact_us_form.cleaned_data['message'])
+            # send_mail('New Enquiry', message, sender_email, ['bagladivyang03@gmail.com'])
             contact_us_form.save()
             message_sent = True
     else:
@@ -105,16 +110,7 @@ def contact_us(request):
 #     template_name = 'grocery_management/viewprofile.html'
 @login_required
 def view_profile(request):
-    user_info = User.objects.filter(id=request.user.id).prefetch_related('id').values(
-        'id','username','email'
-    )
-    print(user_info)
-    # user_Id = user_info.id
     customer_info = CustomerRegistration.objects.get(user_id=request.user.id)
     print(customer_info)
     print(customer_info.street)
-    # customer_set = CustomerRegistrationSerializer(customer_info,many=True)
-    # customer_street = customer_info.street
-
-    # print(customer_street)
     return render(request,'grocery_management/viewprofile.html',{'customer_info':customer_info})
