@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-
 {% extends 'grocery_management/base.html' %}
 {% load static %}
+{% block body5 %}
+active
+{% endblock %}
 {% block body_block %}
 <link rel="stylesheet" href="{% static 'css/viewprofile.css' %}">
-
+<div class = "main-profile">
 <div class="container">
   <div class="main-body">
-  
+
         <br>
         <br>
         <br>
         <br>
-  
+        {% include 'grocery_management/messages.html' %}
         <div class="row gutters-sm">
           <div class="col-md-4 mb-3">
             <div class="card">
@@ -25,8 +27,8 @@
                     <p class="text-muted font-size-sm">{{ customer_info.street }}</p>
                     <p class="text-muted font-size-sm">{{ customer_info.city }},{{ customer_info.pincode }}</p>
                     <p class="text-muted font-size-sm">{{ customer_info.mobile }}</p>
-                    <!-- <button class="btn btn-primary">Follow</button>
-                    <button class="btn btn-outline-primary">Message</button> -->
+                    <button class="btn btn-primary">Follow</button>
+                    <button class="btn btn-outline-primary">Message</button>
                     <div>
                       <hr>
                       <a href="http://google.com"><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 60px; color: black;"></i></a>
@@ -42,31 +44,37 @@
           <div class="col-md-8">
             <div class="card mb-3">
               <div class="card-body">
-                <div class="row">
+                
+                <form enctype = "multipart/form-data" method = "post">
+                  {% csrf_token %}
+                  <div class="row">
                   <div class="col-sm-3">
-                    <h6 class="mb-0">Full Name</h6>
+                    <h6 class="mb-0">Street</h6>
                   </div>
                   <div class="col-sm-9 text-secondary"> 
                     <!-- {{ request.user.username }} -->
-                    <input type="text" class="form-control no-border" value="Kenneth Valdez">
+                    {{ update_form.street }}
+                    <!-- <input type="text" class="form-control no-border" value="Kenneth Valdez"> -->
                   </div>
                 </div>
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
-                    <h6 class="mb-0">Email</h6>
+                    <h6 class="mb-0">City</h6>
                   </div>
                   <div class="col-sm-9 text-secondary">
-                    <input type="email" class="form-control no-border" value="john@gmail.com"> 
+                    {{ update_form.city }}
+                    <!-- <input type="email" class="form-control no-border" value="john@gmail.com">  -->
                   </div>
                 </div>
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
-                    <h6 class="mb-0">Phone</h6>
+                    <h6 class="mb-0">PinCode</h6>
                   </div>
                   <div class="col-sm-9 text-secondary">
-                    <input type="tel" class="form-control no-border" value="2398169029">
+                    {{ update_form.pincode }}
+                    <!-- <input type="tel" class="form-control no-border" value="2398169029"> -->
                   </div>
                 </div>
                 <hr>
@@ -75,24 +83,17 @@
                     <h6 class="mb-0">Mobile</h6>
                   </div>
                   <div class="col-sm-9 text-secondary">
-                    <input type="tel" class="form-control no-border" value="3203804539">
+                    {{ update_form.mobile }}
+                    <!-- <input type="tel" class="form-control no-border" value="3203804539"> -->
                   </div>
                 </div>
                 <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Address</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <input type="text" class="form-control no-border" value="Bay Area, San Francisco, CA">
-                  </div>
-                </div>
-                <br>
                 <div class="row" style="padding-left: 200px;">
                   <div class="col-sm-3">
                     <button class="btn btn-danger" id = "btn1">Update</button>
                   </div>
                 </div>
+              </form>
                 <script>
                   document.querySelector("button").addEventListener("click",function(){
                     alert("Are you Sure you want to update changes?");
@@ -134,4 +135,6 @@
         </div>
       </div>
   </div>
+</div>
+  <link rel="stylesheet" href="{% static 'js/app.js' %}">
 {% endblock %}

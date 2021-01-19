@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from grocery_management.forms import UserForm, CustomerInfoForm, ContactUsForm
+from grocery_management.forms import UserForm, CustomerInfoForm, ContactUsForm, UpdateInfoForm
 from grocery_management.models import CustomerRegistration
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -15,6 +15,7 @@ from .serializer import *
 from .models import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.contrib import messages
 # Create your views here.
 
 
@@ -119,8 +120,18 @@ def view_profile(request):
     customer_info = CustomerRegistration.objects.get(user_id=request.user.id)
     print(customer_info)
     print(customer_info.street)
-    return render(request, 'grocery_management/viewprofile.html', {'customer_info': customer_info})
+    update_form = UpdateInfoForm(instance=customer_info)
+    print(update_form)
+    # print(update_form.mobile)
+    if request.method=="POST":
+        update_form = UpdateInfoForm(request.POST,instance=customer_info)
+        if update_form.is_valid():
+            update_form.save()
+            messages.success(request,"Your profile is updated successfully!!",extra_tags='alert-success')
+    return render(request, 'grocery_management/viewprofile.html', {'customer_info': customer_info,'update_form':update_form})
 
+# class ProfileView(TemplateView):
+#     template_name = 'grocery_management/viewprofile.html'
 
 class CartView(TemplateView):
     template_name = 'grocery_management/cart.html'

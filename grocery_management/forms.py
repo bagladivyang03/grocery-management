@@ -26,6 +26,18 @@ class CustomerInfoForm(forms.ModelForm):
             'mobile':forms.TextInput(attrs={'class':'form-control bg-white border-left-0 border-md','placeholder':'Mobile No.'}),
         }
 
+
+class UpdateInfoForm(forms.ModelForm):
+    class Meta():
+        model = CustomerRegistration
+        fields = ('street','city','pincode','mobile')
+        widgets = {
+            'street':forms.TextInput(attrs={'class':'form-control no-border'}),
+            'city':forms.TextInput(attrs={'class':'form-control no-border'}),
+            'pincode':forms.TextInput(attrs={'class':'form-control no-border'}),
+            'mobile':forms.TextInput(attrs={'class':'form-control no-border'}),
+        }
+
     
 class ContactUsForm(forms.ModelForm):
     class Meta():
