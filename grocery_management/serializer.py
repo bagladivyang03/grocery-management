@@ -12,3 +12,9 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = '__all__'
+
+
+class CartItemsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartItems
+        fields = '__all__'

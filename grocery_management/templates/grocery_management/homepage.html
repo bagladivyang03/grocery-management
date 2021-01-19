@@ -32,6 +32,34 @@
       <div class="latest-products">
         <div class="container">
           <div class="row">
+            {% for item in Items %}
+            <div class="col-md-4">
+                <div class="product-item">
+                  <a href="product-details.html"><img src='/static/images/{{item.item_name}}.jfif' alt=""></a>
+                  <div class="down-content">
+                    <a href="product-details.html"><h4>{{item.item_name}}</h4></a>
+                    <h6><small><del>$999.00 </del></small> '₹{{item.price}}'</h6>
+                    <p>{{item.description}}</p>
+                    <div class="row">
+                      <div class="form-group">
+                        <label for="sel1">Select quantity</label>
+                        <select class="form-control" id="sel1">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                        </select>
+                        <p>{{item.quantity_type_id}}</p>
+                      </div>
+                     
+                    </div>
+                    <form method="get" action="addToCart/{{item.id}}">
+                    <button type="submit" class="btb btn-primary btn-block">Add to Cart</button>
+                    </form>
+                  </div>
+                </div>
+              </div>            
+            {% endfor %}
             <div class="col-md-12">
               <div class="section-heading">
                 <h2>Featured Products</h2>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from grocery_management.forms import UserForm, CustomerInfoForm, ContactUsForm
 from grocery_management.models import CustomerRegistration
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -15,26 +16,24 @@ from .serializer import *
 from .models import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
+import json
+from django.core import serializers
+from datetime import datetime
 # Create your views here.
 
 
 def register(request):
     registered = False
-
     if request.method == "POST":
         user_form = UserForm(data=request.POST)
         customer_info_form = CustomerInfoForm(data=request.POST)
-
         if user_form.is_valid() and customer_info_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-
             customer_info = customer_info_form.save(commit=False)
             customer_info.user = user
-
             customer_info.save()
-
             registered = True
             return redirect('grocery_management:login')
     else:
@@ -62,10 +61,11 @@ def user_login(request):
                 # else:
                 #     return HttpResponse("Account doesn't exists")
             else:
-                print("Someone tried to d and failed!")
-                print("Username: {} and password {}".format(username, password))
-                return HttpResponse("invalid login details supplied!")
-        return render(request, 'grocery_management/login.html')
+                messages.info(request, 'Username or Password Incorrect')
+                #print("Someone tried to d and failed!")
+                #print("Username: {} and password {}".format(username, password))
+                # return HttpResponse("invalid login details supplied!")
+        return render(request, 'grocery_management/login.html', {})
 
 
 @login_required
@@ -133,6 +133,88 @@ class ProductView(TemplateView):
 class ItemView(APIView):
     def get(self, request):
         getAllItems = Item.objects.all()
-        # itemset = ItemSerializer(getAllItems, many=True)
-        return render(request, 'homepage.html', {'Items': getAllItems})
-        # return Response(serializer.data)
+        itemset = ItemSerializer(getAllItems, many=True)
+        return render(request, 'grocery_management/homepage.html', {'Items': getAllItems})
+        # return Response(itemset.data)
+
+
+@login_required
+def addToCart(request, id):
+    print(request.user.id)
+    UserCartExists = Cart.objects.filter(user=request.user.id).exists()
+    if not UserCartExists:
+        cart_obj = Cart()
+        cart_obj.user = request.user
+        cart_obj.ordered = False
+        cart_obj.total_price = 0
+        cart_obj.save()
+    userCartReference = Cart.objects.get(user=request.user.id)
+    getitem = Item.objects.get(id=id)
+    itemRef = CartItems()
+    itemRef.cart = userCartReference
+    itemRef.user = request.user
+    itemRef.item = getitem
+    itemRef.price = getitem.price
+    itemRef.quantity = 1
+    itemRef.save()
+    messages.info(request, 'Item Added to Cart')
+    return redirect('grocery_management:getAllItems')
+
+
+class cartItemsView(APIView):
+    def get(self, request):
+        print(request.user.id)
+        userCart = CartItems.objects.filter(
+            user_id=request.user.id).prefetch_related().values('id', 'price', 'quantity', 'cart_id', 'cart_id__total_price', 'user_id', 'item__item_name', 'item__image', 'item_id__price', 'item_id__colour_type_id__colour_name', 'item_id__quantity_type_id__variant_name', 'item_id__size_type_id__size_name', 'item_id__description', 'item_id__quantity_available')
+        jsonRes = []
+        for res in userCart:
+            if res['item_id__colour_type_id__colour_name'] == None:
+                res['item_id__colour_type_id__colour_name'] = 'Not Applicable'
+            if res['item_id__quantity_type_id__variant_name'] == None:
+                res['item_id__quantity_type_id__variant_name'] = 'Not Applicable'
+            if res['item_id__size_type_id__size_name'] == None:
+                res['item_id__size_type_id__size_name'] = 'Not Applicable'
+            jsonRes.append(res)
+        cartItemsDetails = jsonRes
+        lengthofCartItemDetails = len(jsonRes)
+        total_amount = jsonRes[lengthofCartItemDetails -
+                               1]['cart_id__total_price']
+        total_amount_with_gst = total_amount+((total_amount*5)/100)
+        expected_delivery = str(datetime.today()).split()[0]
+        customer_info = CustomerRegistration.objects.get(
+            user_id=request.user.id)
+        print(cartItemsDetails)
+        context = {'cartItemsDetails': cartItemsDetails,
+                   'lengthofCartItemDetails': lengthofCartItemDetails,
+                   'total_amount': total_amount,
+                   'total_amount_with_gst': total_amount_with_gst,
+                   'expected_delivery': expected_delivery,
+                   'customer_info': customer_info
+                   }
+        return render(request, 'grocery_management/cart.html',  context)
+
+
+@login_required
+def removeItemFromCart(request, id):
+    item = CartItems.objects.get(user_id=request.user.id, id=id)
+    userCart = Cart.objects.get(user=request.user.id)
+    userCart.total_price = userCart.total_price - item.price
+    userCart.save()
+    item.delete()
+    return redirect('grocery_management:getMyCart')
+
+
+@login_required
+def getitems(request):
+    getAllItems = Item.objects.all()
+    itemset = ItemSerializer(getAllItems, many=True)
+    return render(request, 'grocery_management/products.html', {'Items': getAllItems})
+
+
+@login_required
+def search(request, string):
+    itemset = Item.objects.filter(item_name__contains=string)
+    Items = []
+    for res in itemset:
+        Items.append(res)
+    return render(request, 'grocery_management/products.html',  {'Items': Items})

@@ -48,7 +48,7 @@ class SizeVariant(models.Model):
 
 class Item(models.Model):
     item_name = models.CharField(max_length=30)
-    image = models.ImageField(upload_to='static/products')
+    image = models.ImageField(upload_to='./grocery_management/static/images')
     price = models.CharField(max_length=15)
     description = models.TextField()
     quantity_available = models.IntegerField(default=10)
@@ -93,10 +93,10 @@ class CartItems(models.Model):
 
 @receiver(pre_save, sender=CartItems)
 def recalculate_total_price(sender, **kwargs):
-    cart_items = kwargs['instances']
+    cart_items = kwargs['instance']
     price_of_item = Item.objects.get(id=cart_items.item.id)
     cart_items.price = cart_items.quantity * float(price_of_item.price)
     total_cart_item = CartItems.objects.filter(user=cart_items.user)
     cart = Cart.objects.get(id=cart_items.cart.id)
-    cart.total_price = cart_items.price
+    cart.total_price = cart.total_price + cart_items.price
     cart.save()

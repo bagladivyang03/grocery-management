@@ -2,213 +2,383 @@
 
 {% block body_block %}
 
-    <div class="page-heading about-heading header-text" style="background-image: url(/static/images/cart.jpg);">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="text-content">
-              <h4>Lorem ipsum dolor sit amet</h4>
-              <h2>Checkout</h2>
-            </div>
+<div class="page-heading about-heading header-text" style="background-image: url(/static/images/cart.jpg);">
+     <div class="container">
+          <div class="row">
+               <div class="col-md-12">
+                    <div class="text-content">
+                         <h4>Only Few steps away from ordering your Groceries!</h4>
+                         <h2>Checkout</h2>
+                    </div>
+               </div>
           </div>
-        </div>
-      </div>
-    </div>
+     </div>
+</div>
 
-    <div class="products call-to-action">
-      <div class="container">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">
-            <div class="row">
-                  <div class="col-6">
-                       <em>Sub-total</em>
-                  </div>
-                  
-                  <div class="col-6 text-right">
-                       <strong>$ 128.00</strong>
-                  </div>
-             </div>
-          </li>
-          
-          <li class="list-group-item">
-               <div class="row">
-                    <div class="col-6">
-                         <em>Extra</em>
-                    </div>
+<div class="products call-to-action">
+     <div class="container">
+          <ul class="list-group list-group-flush">
+               <li class="list-group-item">
+                    <section>
+                         <!--Grid row-->
+                         <div class="row">
+                              <!--Grid column-->
+                              <div class="col-lg-8">
+                                   <!-- Card -->
+                                   <div class="mb-3">
+                                        <div class="pt-4 wish-list">
+                                             <h5 class="mb-4">Cart (<span>{{lengthofCartItemDetails}}</span> items)</h5>
+                                             {% for item in cartItemsDetails %}
+                                             <div class="row mb-4">
+                                                  <div class="col-md-5 col-lg-3 col-xl-3">
+                                                       <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                                                            <img class="img-fluid w-100"
+                                                                 src="/static/images/{{item.item__item_name}}.jfif"
+                                                                 alt="Sample">
+                                                       </div>
+                                                  </div>
+                                                  <div class="col-md-7 col-lg-9 col-xl-9">
+                                                       <div>
+                                                            <div class="d-flex justify-content-between">
+                                                                 <div>
+                                                                      <h5>{{item.item__item_name}}</h5>
+                                                                      <p class="mb-3 text-muted text-uppercase small">
+                                                                           {{item.quantity}} -
+                                                                           {{item.item_id__quantity_type_id__variant_name}}
+                                                                      </p>
+                                                                      <p class="mb-2 text-muted text-uppercase small">
+                                                                           Color:
+                                                                           {{item.item_id__colour_type_id__colour_name}}
+                                                                      </p>
+                                                                      <p class="mb-3 text-muted text-uppercase small">
+                                                                           Size:
+                                                                           {{item.item_id__size_type_id__size_name}}</p>
+                                                                 </div>
+                                                                 <div>
+                                                                      <div
+                                                                           class="def-number-input number-input safari_only mb-0 w-100">
+                                                                           <button
+                                                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                                                class="minus decrease"></button>
+                                                                           <input class="quantity" min="0"
+                                                                                name="quantity" value="1" type="number">
+                                                                           <button
+                                                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                                                class="plus increase"></button>
+                                                                      </div>
+                                                                      <small id="passwordHelpBlock"
+                                                                           class="form-text text-muted text-center">
+                                                                           (Note, 1 piece)
+                                                                      </small>
+                                                                 </div>
+                                                            </div>
+                                                            <div
+                                                                 class="d-flex justify-content-between align-items-center">
+                                                                 <div>
+                                                                      <a href="deleteItem/{{item.id}}" type="button"
+                                                                           class="card-link-secondary small text-uppercase mr-3"><i
+                                                                                class="fas fa-trash-alt mr-1"></i>
+                                                                           Remove item </a>
+                                                                 </div>
+                                                                 <p class="mb-0"><span><strong
+                                                                                id="summary">{{item.price}}₹</strong></span>
+                                                                 </p class="mb-0">
+                                                            </div>
+                                                       </div>
+                                                  </div>
+                                             </div>
+                                             <hr class="mb-4">
+                                             {% endfor %}
+                                             <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Do not
+                                                  delay the purchase, adding
+                                                  items to your cart does not mean booking them.</p>
+                                        </div>
+                                   </div>
+                                   <!-- Card -->
 
-                    <div class="col-6 text-right">
-                         <strong>$ 0.00</strong>
+                                   <!-- Card -->
+                                   <div class="mb-3">
+                                        <div class="pt-4">
+
+                                             <h5 class="mb-4">Expected shipping delivery</h5>
+
+                                             <p class="mb-0"> {{expected_delivery}}</p>
+                                        </div>
+                                   </div>
+                                   <!-- Card -->
+
+                                   <!-- Card -->
+                                   <div class="mb-3">
+                                        <div class="pt-4">
+
+                                             <h5 class="mb-4">We accept</h5>
+
+                                             <img class="mr-2" width="45px"
+                                                  src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                                                  alt="Visa">
+                                             <img class="mr-2" width="45px"
+                                                  src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                                                  alt="American Express">
+                                             <img class="mr-2" width="45px"
+                                                  src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                                                  alt="Mastercard">
+                                             <img class="mr-2" width="45px"
+                                                  src="https://mdbootstrap.com/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.png"
+                                                  alt="PayPal acceptance mark">
+                                        </div>
+                                   </div>
+                                   <!-- Card -->
+
+                              </div>
+                              <!--Grid column-->
+
+                              <!--Grid column-->
+                              <div class="col-lg-4">
+
+                                   <!-- Card -->
+                                   <div class="mb-3">
+                                        <div class="card-body pt-4">
+                                             <h5 class="mb-3">The total amount of</h5>
+                                             <ul class="list-group list-group-flush">
+                                                  <li
+                                                       class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                                       Temporary amount
+                                                       <span>{{total_amount}}₹</span>
+                                                  </li>
+                                                  <li
+                                                       class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                                       Shipping
+                                                       <span>Applicable</span>
+                                                  </li>
+                                                  <li
+                                                       class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                                       <div>
+                                                            <strong>The total amount of</strong>
+                                                            <strong>
+                                                                 <p class="mb-0">(including GST)</p>
+                                                            </strong>
+                                                       </div>
+                                                       <span><strong>{{total_amount_with_gst}}₹</strong></span>
+                                                  </li>
+                                             </ul>
+                                             <a href="#checkout"> <button type="button"
+                                                       class="btn btn-danger btn-block">go to checkout</button></a>
+                                        </div>
+                                   </div>
+
+                                   <!-- Card -->
+
+                                   
+
+                              </div>
+                              <!--Grid column-->
+
+                         </div>
+                         <!-- Grid row -->
+
+                    </section>
+
+                    {% for item in cartItemsDetails %}
+                    <div class="table">
+
+                         <p>{{item}}</p>
+                         <p>{{total_price}}</p>
+                         <p>{{customer_info}}</p>
+                         <p>1</p>
+                         {% endfor %}
+                         <div class="row">
+                              <div class="col-6">
+                                   <em>Sub-total</em>
+                              </div>
+
+                              <div class="col-6 text-right">
+                                   <strong>{{total_amount}}₹</strong>
+                              </div>
+                         </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="row">
+                         <div class="col-6">
+                              <em>GST</em>
+                         </div>
+
+                         <div class="col-6 text-right">
+                              <strong>5%</strong>
+                         </div>
                     </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="row">
+                         <div class="col-6">
+                              <em>Total</em>
+                         </div>
+
+                         <div class="col-6 text-right">
+                              <strong>{{total_amount_with_gst}}₹</strong>
+                         </div>
+                    </div>
+               </li>
+          </ul>
+
+          <br>
+
+          <div class="inner-content">
+               <div class="contact-form">
+                    <form action="#">
+                         <div class="row">
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">Title:</label>
+                                        <select class="form-control" data-msg-required="This field is required.">
+                                             <option value="">-- Choose --</option>
+                                             <option value="dr">Dr.</option>
+                                             <option value="miss">Miss</option>
+                                             <option value="mr">Mr.</option>
+                                             <option value="mrs">Mrs.</option>
+                                             <option value="ms">Ms.</option>
+                                             <option value="other">Other</option>
+                                             <option value="prof">Prof.</option>
+                                             <option value="rev">Rev.</option>
+                                        </select>
+                                   </div>
+                              </div>
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">Name:</label>
+                                        <input type="text" value="{{request.user.username}}" class="form-control">
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="row">
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">Email:</label>
+                                        <input type="text" value="{{request.user.email}}" class="form-control">
+                                   </div>
+                              </div>
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">Phone:</label>
+                                        <input type="text" value="{{customer_info.mobile}}" class="form-control">
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="row">
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">Address 1:</label>
+                                        <input type="text" value="{{customer_info.street}}" class="form-control">
+                                   </div>
+                              </div>
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">Address 2:</label>
+                                        <input type="text" value="{{customer_info.pincode}}" class="form-control">
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="row">
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">City:</label>
+                                        <input type="text" value="{{customer_info.city}}" class="form-control">
+                                   </div>
+                              </div>
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">State:</label>
+                                        <select name="state" id="state" class="form-control">
+                                             <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                             <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                             <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                             <option value="Assam">Assam</option>
+                                             <option value="Bihar">Bihar</option>
+                                             <option value="Chandigarh">Chandigarh</option>
+                                             <option value="Chhattisgarh">Chhattisgarh</option>
+                                             <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                             <option value="Daman and Diu">Daman and Diu</option>
+                                             <option value="Delhi">Delhi</option>
+                                             <option value="Lakshadweep">Lakshadweep</option>
+                                             <option value="Puducherry">Puducherry</option>
+                                             <option value="Goa">Goa</option>
+                                             <option value="Gujarat">Gujarat</option>
+                                             <option value="Haryana">Haryana</option>
+                                             <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                             <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                             <option value="Jharkhand">Jharkhand</option>
+                                             <option value="Karnataka">Karnataka</option>
+                                             <option value="Kerala">Kerala</option>
+                                             <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                             <option value="Maharashtra">Maharashtra</option>
+                                             <option value="Manipur">Manipur</option>
+                                             <option value="Meghalaya">Meghalaya</option>
+                                             <option value="Mizoram">Mizoram</option>
+                                             <option value="Nagaland">Nagaland</option>
+                                             <option value="Odisha">Odisha</option>
+                                             <option value="Punjab">Punjab</option>
+                                             <option value="Rajasthan">Rajasthan</option>
+                                             <option value="Sikkim">Sikkim</option>
+                                             <option value="Tamil Nadu">Tamil Nadu</option>
+                                             <option value="Telangana">Telangana</option>
+                                             <option value="Tripura">Tripura</option>
+                                             <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                             <option value="Uttarakhand">Uttarakhand</option>
+                                             <option value="West Bengal">West Bengal</option>
+                                             </select>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="row">
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">Zip:</label>
+                                        <input type="text" value="{{customer_info.pincode}}" class="form-control">
+                                   </div>
+                              </div>
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">Country:</label>
+                                        <select class="form-control">
+                                             <option value="">India</option>
+                                        </select>
+                                   </div>
+                              </div>
+                         </div>
+
+                         <div class="row">
+                              <div class="col-sm-6 col-xs-12">
+                                   <div class="form-group">
+                                        <label class="control-label">Payment method</label>
+
+                                        <select class="form-control">
+                                             <option value="">-- Choose --</option>
+                                             <option value="bank">Bank account</option>
+                                             <option value="cash">Cash</option>
+                                             <option value="paypal">PayPal</option>
+                                        </select>
+                                   </div>
+                              </div>
+                         </div>
+
+                         <div class="form-group">
+                              <label class="control-label">
+                                   <input type="checkbox">
+
+                                   I agree with the <a href="terms.html" target="_blank">Terms &amp; Conditions</a>
+                              </label>
+                         </div>
+
+                         <div class="clearfix">
+                              <button type="button" class="filled-button pull-left">Back</button>
+
+                              <button id='checkout' type="submit" class="filled-button pull-right">Checkout</button>
+                         </div>
+                    </form>
                </div>
-          </li>
-
-          <li class="list-group-item">
-               <div class="row">
-                    <div class="col-6">
-                         <em>Tax</em>
-                    </div>
-
-                    <div class="col-6 text-right">
-                         <strong>$ 10.00</strong>
-                    </div>
-               </div>
-          </li>
-
-          <li class="list-group-item">
-               <div class="row">
-                    <div class="col-6">
-                         <em>Total</em>
-                    </div>
-
-                    <div class="col-6 text-right">
-                         <strong>$ 138.00</strong>
-                    </div>
-               </div>
-          </li>
-
-          <li class="list-group-item">
-               <div class="row">
-                    <div class="col-6">
-                         <em>Deposit payment required</em>
-                    </div>
-
-                    <div class="col-6 text-right">
-                         <strong>$ 20.00</strong>
-                    </div>
-               </div>
-          </li>
-        </ul>
-
-        <br>
-        
-        <div class="inner-content">
-          <div class="contact-form">
-              <form action="#">
-                   <div class="row">
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">Title:</label>
-                                  <select class="form-control" data-msg-required="This field is required.">
-                                       <option value="">-- Choose --</option>
-                                       <option value="dr">Dr.</option>
-                                       <option value="miss">Miss</option>
-                                       <option value="mr">Mr.</option>
-                                       <option value="mrs">Mrs.</option>
-                                       <option value="ms">Ms.</option>
-                                       <option value="other">Other</option>
-                                       <option value="prof">Prof.</option>
-                                       <option value="rev">Rev.</option>
-                                  </select>
-                             </div>
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">Name:</label>
-                                  <input type="text" class="form-control">
-                             </div>
-                        </div>
-                   </div>
-                   <div class="row">
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">Email:</label>
-                                  <input type="text" class="form-control">
-                             </div>
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">Phone:</label>
-                                  <input type="text" class="form-control">
-                             </div>
-                        </div>
-                   </div>
-                   <div class="row">
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">Address 1:</label>
-                                  <input type="text" class="form-control">
-                             </div>
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">Address 2:</label>
-                                  <input type="text" class="form-control">
-                             </div>
-                        </div>
-                   </div>
-                   <div class="row">
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">City:</label>
-                                  <input type="text" class="form-control">
-                             </div>
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">State:</label>
-                                  <input type="text" class="form-control">
-                             </div>
-                        </div>
-                   </div>
-                   <div class="row">
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">Zip:</label>
-                                  <input type="text" class="form-control">
-                             </div>
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">Country:</label>
-                                  <select class="form-control">
-                                       <option value="">-- Choose --</option>
-                                       <option value="">-- Choose --</option>
-                                       <option value="">-- Choose --</option>
-                                       <option value="">-- Choose --</option>
-                                  </select>
-                             </div>
-                        </div>
-                   </div>
-
-                   <div class="row">
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">Payment method</label>
-
-                                  <select class="form-control">
-                                       <option value="">-- Choose --</option>
-                                       <option value="bank">Bank account</option>
-                                       <option value="cash">Cash</option>
-                                       <option value="paypal">PayPal</option>
-                                  </select>
-                             </div>
-                        </div>
-
-                        <div class="col-sm-6 col-xs-12">
-                             <div class="form-group">
-                                  <label class="control-label">Captcha</label>
-                                  <input type="text" class="form-control">
-                             </div>
-                        </div>
-                   </div>
-
-                   <div class="form-group">
-                        <label class="control-label">
-                             <input type="checkbox">
-
-                             I agree with the <a href="terms.html" target="_blank">Terms &amp; Conditions</a>
-                        </label>
-                   </div>
-
-                   <div class="clearfix">
-                        <button type="button" class="filled-button pull-left">Back</button>
-                        
-                        <button type="submit" class="filled-button pull-right">Finish</button>
-                   </div>
-              </form>
           </div>
-        </div>
-      </div>
-    </div>
+     </div>
+</div>
 
 {% endblock %}
