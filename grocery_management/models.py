@@ -11,7 +11,7 @@ class CustomerRegistration(models.Model):
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     pincode = models.CharField(max_length=6)
-    mobile = models.CharField(max_length=10)
+    mobile = models.CharField(max_length=10,unique=True)
 
     def __str__(self):
         return self.user.username
