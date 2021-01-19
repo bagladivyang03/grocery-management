@@ -10,7 +10,7 @@ class UserForm(forms.ModelForm):
         fields = ('username','email','password')
         widgets = {
             'username':forms.TextInput(attrs={'class':'form-control bg-white border-left-0 border-md','placeholder':'Username'}),
-            'email':forms.TextInput(attrs={'class':'form-control bg-white border-left-0 border-md','placeholder':'Email'}),
+            'email':forms.EmailInput(attrs={'class':'form-control bg-white border-left-0 border-md','placeholder':'Email'}),
             'password':forms.PasswordInput(attrs={'class':'form-control bg-white border-left-0 border-md','placeholder':'Password'}),
         }
 
@@ -36,4 +36,17 @@ class ContactUsForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class':'form-control' ,'id':'email', 'placeholder':'E-Mail Address'}),
             'subject': forms.TextInput(attrs={'class':'form-control' ,'id':'subject', 'placeholder':'Subject'}),
             'message': forms.TextInput(attrs={'rows':'6', 'class':'form-control' ,'id':'message', 'placeholder':'Your Message'}),
+        }
+
+
+
+class UpdateInfoForm(forms.ModelForm):
+    class Meta():
+        model = CustomerRegistration
+        fields = ('street','city','pincode','mobile')
+        widgets = {
+            'street':forms.TextInput(attrs={'class':'form-control no-border'}),
+            'city':forms.TextInput(attrs={'class':'form-control no-border'}),
+            'pincode':forms.TextInput(attrs={'class':'form-control no-border'}),
+            'mobile':forms.TextInput(attrs={'class':'form-control no-border'}),
         }

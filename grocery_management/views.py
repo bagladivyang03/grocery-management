@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from grocery_management.forms import UserForm, CustomerInfoForm, ContactUsForm
+from grocery_management.forms import UserForm, CustomerInfoForm, ContactUsForm, UpdateInfoForm
 from grocery_management.models import CustomerRegistration
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -19,6 +19,7 @@ from rest_framework.response import Response
 import json
 from django.core import serializers
 from datetime import datetime
+from django.contrib import messages
 # Create your views here.
 
 
@@ -54,18 +55,18 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
 
             if user is not None:
-                # if user.is_active:
-                request.session['user_id'] = request.user.id
-                login(request, user)
-                return redirect("grocery_management:homepage")
-                # else:
-                #     return HttpResponse("Account doesn't exists")
+                if user.is_active:
+                    request.session['user_id'] = request.user.id
+                    login(request, user)
+                    return redirect("grocery_management:homepage")
+                else:
+                    messages.info(request, "Account doesn't exists")
             else:
                 messages.info(request, 'Username or Password Incorrect')
-                #print("Someone tried to d and failed!")
-                #print("Username: {} and password {}".format(username, password))
+                # print("Someone tried to login and failed!")
+                # print("Username: {} and password {}".format(username, password))
                 # return HttpResponse("invalid login details supplied!")
-        return render(request, 'grocery_management/login.html', {})
+        return render(request, 'grocery_management/login.html',{})
 
 
 @login_required
@@ -119,7 +120,15 @@ def view_profile(request):
     customer_info = CustomerRegistration.objects.get(user_id=request.user.id)
     print(customer_info)
     print(customer_info.street)
-    return render(request, 'grocery_management/viewprofile.html', {'customer_info': customer_info})
+    update_form = UpdateInfoForm(instance=customer_info)
+    print(update_form)
+    # print(update_form.mobile)
+    if request.method=="POST":
+        update_form = UpdateInfoForm(request.POST,instance=customer_info)
+        if update_form.is_valid():
+            update_form.save()
+            messages.success(request,"Your profile is updated successfully!!",extra_tags='alert-success')
+    return render(request, 'grocery_management/viewprofile.html', {'customer_info': customer_info,'update_form':update_form})
 
 
 class CartView(TemplateView):
