@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 {% extends "grocery_management/base.html" %}
-
+{% block body1 %}
+active
+{% endblock %}
 {% block body_block %}
 
 <!-- Page Content -->
@@ -63,7 +65,7 @@
             <div class="col-md-12">
               <div class="section-heading">
                 <h2>Featured Products</h2>
-                <a href="products.html">view more <i class="fa fa-angle-right"></i></a>
+                <a href="{% url 'grocery_management:productview' %}">view more <i class="fa fa-angle-right"></i></a>
               </div>
             </div>
             <div class="col-md-4">

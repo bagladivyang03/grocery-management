@@ -1,4 +1,9 @@
-{% extends 'grocery_management/base.html' %} {% block body_block %}
+{% extends 'grocery_management/base.html' %} 
+{% block body2 %}
+active
+{% endblock %}
+
+{% block body_block %}
 
 <div
   class="page-heading about-heading header-text"
@@ -38,9 +43,7 @@
       {% for item in Items %}
       <div class="col-md-4">
         <div class="product-item">
-          <a href="product-details.html"
-            ><img src="/static/images/{{item.item_name}}.jfif" alt=""
-          /></a>
+          <a href="product-details.html"><img src="/static/images/{{item.item_name}}.jfif" alt=""/></a>
           <div class="down-content">
             <a href="product-details.html"><h4>{{item.item_name}}</h4></a>
             <h6>
