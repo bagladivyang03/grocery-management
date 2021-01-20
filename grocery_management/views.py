@@ -143,7 +143,7 @@ class ItemView(APIView):
     def get(self, request):
         getAllItems = Item.objects.all()
         itemset = ItemSerializer(getAllItems, many=True)
-        return render(request, 'grocery_management/homepage.html', {'Items': getAllItems})
+        return render(request, 'grocery_management/products.html', {'Items': getAllItems})
         # return Response(itemset.data)
 
 
@@ -227,3 +227,9 @@ def search(request, string):
     for res in itemset:
         Items.append(res)
     return render(request, 'grocery_management/products.html',  {'Items': Items})
+
+@login_required
+def homepage(request):
+    getAllItems = Item.objects.all()[:6]
+    itemset = ItemSerializer(getAllItems, many=True)
+    return render(request, 'grocery_management/homepage.html', {'Items': getAllItems})
