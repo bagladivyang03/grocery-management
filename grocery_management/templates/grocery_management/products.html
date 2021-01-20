@@ -21,7 +21,7 @@ active
                 <button type="submit"><i class="fa fa-search"></i></button>
               </form> -->
           <div class="active-cyan-4 mb-4">
-            <form action="post" action="search/{{searchString}}">
+            <form action="post" action="search/{{string}}">
               <input
                 class="form-control"
                 type="text"
@@ -43,11 +43,11 @@ active
       {% for item in Items %}
       <div class="col-md-4">
         <div class="product-item">
-          <a href="product-details.html"><img src="/static/images/{{item.item_name}}.jfif" alt=""/></a>
+          <a href="product-details.html"><img src="/static/images/{{item.item_name}}.jpg" alt=""/></a>
           <div class="down-content">
             <a href="product-details.html"><h4>{{item.item_name}}</h4></a>
             <h6>
-              <small><del>$999.00 </del></small> '₹{{item.price}}'
+               '₹{{item.price}}'
             </h6>
             <p>{{item.description}}</p>
             <div class="row">
