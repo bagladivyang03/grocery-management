@@ -21,6 +21,7 @@ urlpatterns = [
          views.addToCart, name='addItemToCart'),
     path('home/addToCart/<int:id>',
          login_required(views.addToCart), name='addItemToCart'),
+     path('getAllItems/search/addToCart/<int:id>',login_required(views.addToCart),name='addItemToCart'),
     path('getMyCart', login_required(cartItemsView.as_view()), name='getMyCart'),
     path('deleteItem/<int:id>',
          login_required(views.removeItemFromCart), name='remvoeItemFromCart'),
