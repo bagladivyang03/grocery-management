@@ -4,124 +4,158 @@
 active
 {% endblock %}
 {% block body_block %}
-
 <!-- Page Content -->
-    <!-- Banner Starts Here -->
-    <div class="banner header-text">
-        <div class="owl-banner owl-carousel">
-          <div class="banner-item-01">
-            <div class="text-content">
-              <h4>Welcome to our store!<h4>
-              <h2>Directly at your Doorsteps</h2>
-            </div>
-          </div>
-          <div class="banner-item-02">
-            <div class="text-content">
-              <h4>Fresh Vegetables</h4>
-              <h2>Directly at your Doorsteps</h2>
-            </div>
-          </div>
-          <div class="banner-item-03">
-            <div class="text-content">
-              <h4>Get items at an affordable price</h4>
-              <h2>Directly at your Doorsteps</h2>
-            </div>
-          </div>
-        </div>
+<!-- Banner Starts Here -->
+<div class="banner header-text">
+  <div class="owl-banner owl-carousel">
+    <div class="banner-item-01">
+      <div class="text-content">
+        <h4>Welcome to our store!<h4>
+            <h2>Fresh Groceries at your doorstep!!</h2>
       </div>
-      <!-- Banner Ends Here -->
-  
-      <div class="latest-products">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="section-heading">
-                <h2>Featured Products</h2>
-                <a href="{% url 'grocery_management:getAllItems' %}">view more <i class="fa fa-angle-right"></i></a>
-              </div>
-            </div>
-            {% for item in Items %}
-            <div class="col-md-4">
-                <div class="product-item">
-                  <a href="product-details.html"><img src='/static/images/{{item.item_name}}.jpg' alt=""></a>
-                  <div class="down-content">
-                    <a href="product-details.html"><h4>{{item.item_name}}</h4></a>
-                    <h6> '₹{{item.price}}'</h6>
-                    <p>{{item.description}}</p>
-                    <div class="row">
-                      <div class="form-group">
-                        <label for="sel1">Select quantity</label>
-                        <select class="form-control" id="sel1">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                        </select>
-                        <!-- <p>{{item.quantity_type_id}}</p> -->
-                      </div>
-                     
-                    </div>
-                    <form method="get" action="addToCart/{{item.id}}">
-                    <button type="submit" class="btb btn-primary btn-block">Add to Cart</button>
-                    </form>
-                  </div>
-                </div>
-              </div>            
-            {% endfor %}
-          </div>
-        </div>
+    </div>
+    <div class="banner-item-02">
+      <div class="text-content">
+        <h4>Order you grocery at home today!</h4>
+        <h2>Order from the biggest grocery store to you doorstep</h2>
       </div>
-  
-      <div class="best-features">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="section-heading">
-                <h2>About Us</h2>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="left-content">
-                <p>What began little, with a solitary idea of a store that provides rebate and the basic thought of moving more for less, has become in the course of the last 40 years into the biggest retailer in this whole country. Every week, about 265 million clients and individuals visit our in excess of 13,200 stores under 55 standards in 27 nations and eCommerce sites in 10 nations. With financial year 2018 income of $500.3 billion, ‘Organization Name’ utilizes over 2.2 million partners around the world.</p>
-                <ul class="featured-list">
-                  <li><a href="#">No base request amount required.</a></li>
-                  <li><a href="#">Free home delivery on requests above ₹200.</a></li>
-                  <li><a href="#">We convey all over Pune.</a></li>
-                  <li><a href="#">Request before 12.00pm on weekdays for same day dispatch.</a></li>
-                </ul>
-                <a href="{% url 'grocery_management:aboutus' %}" class="filled-button">Read More</a>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="right-image">
-                <img src="/static/images/about1.jpg" alt="">
-              </div>
-            </div>
-          </div>
-        </div>
+    </div>
+    <div class="banner-item-03">
+      <div class="text-content">
+        <h4>Get items at an affordable price</h4>
+        <h2>Shopping made easy now!</h2>
       </div>
-      <div class="call-to-action">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="inner-content">
-                <div class="row">
-                  <div class="col-md-8">
-                    <h4>Want to know more ?</h4>
-                    <p>Reach out to us at grocerypune@gmail.com</p>
-                  </div>
-                  <div class="col-lg-4 col-md-6 text-right">
-                    <a href="{% url 'grocery_management:contactus' %}" class="filled-button">Contact Us</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      
-    
-  
+    </div>
+  </div>
+</div>
+<!-- Banner Ends Here -->
 
+<div class="latest-products">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>Featured Products</h2>
+          <a href="{% url 'grocery_management:getAllItems' %}">view more <i class="fa fa-angle-right"></i></a>
+        </div>
+      </div>
+      {% for item in Items %}
+      <div class="col-md-4 justify-content-center">
+        <div class="product-item">
+
+          <a href="product-details.html"><img src='/static/images/{{item.item_name}}.jfif' alt=""></a>
+          <div class="down-content">
+            <a href="product-details.html">
+              <h4>{{item.item_name}}</h4>
+            </a>
+            <h6> '₹{{item.price}}'</h6>
+            <p>{{item.description}}</p>
+            <div class="row">
+              <div class="form-group">
+                <!-- <p>{{item.quantity_type_id}}</p> -->
+              </div>
+
+            </div class='align-bottom'>
+            <form method="get" action="addToCart/{{item.id}}">
+              <button type="submit" class="btb btn-primary btn-block">Add to Cart</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="best-features">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>About Us</h2>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="left-content">
+          <p>What began little, with a solitary idea of a store that provides rebate and the basic thought of moving
+            more for less, has become in the course of the last 40 years into the biggest retailer in this whole
+            country. Every week, about 265 million clients and individuals visit our in excess of 13,200 stores under 55
+            standards in 27 nations and eCommerce sites in 10 nations. With financial year 2018 income of $500.3
+            billion, ‘Organization Name’ utilizes over 2.2 million partners around the world.</p>
+          <p class="h5">
+            We are students of Panel 4. This is our Mini Project for the Subject
+            of WTL
+          </p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Sr No</th>
+                <th scope="col">Roll No</th>
+                <th scope="col">Name</th>
+                <th scope="col">ERP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>PD10</td>
+                <td>Rajat Belgundi</td>
+                <td>1032180203</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>PD11</td>
+                <td>Kartik Bhutda</td>
+                <td>1032180229</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>PD12</td>
+                <td>Amey Bhide</td>
+                <td>1032180301</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>PD32</td>
+                <td>Divyang Bagla</td>
+                <td>1032180739</td>
+              </tr>
+            </tbody>
+          </table>
+          <ul class="featured-list">
+            <li><a href="#">No base request amount required.</a></li>
+            <li><a href="#">Free home delivery on requests above ₹200.</a></li>
+            <li><a href="#">We convey all over Pune.</a></li>
+            <li><a href="#">Request before 12.00pm on weekdays for same day dispatch.</a></li>
+          </ul>
+          <a href="{% url 'grocery_management:aboutus' %}" class="filled-button">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="right-image">
+          <img src="/static/images/about1.jfif" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="call-to-action">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="inner-content">
+          <div class="row">
+            <div class="col-md-8">
+              <h4>Want to know more ?</h4>
+              <p>Reach out to us at grocerypune@gmail.com</p>
+            </div>
+            <div class="col-lg-4 col-md-6 text-right">
+              <a href="{% url 'grocery_management:contactus' %}" class="filled-button">Contact Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -10,125 +10,158 @@ active
 
 <div class="container">
   <div class="main-body">
-  
-        <br>
-        <br>
-        <br>
-        <br>
-        {% include 'grocery_management/messages.html' %}
-        <div class="row gutters-sm">
-          <div class="col-md-4 mb-3">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex flex-column align-items-center text-center">
-                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAYFBMVEUAqOz///8ApuxIufAApOsAouvv+v5+y/MLqu35/v/n9/3H6vrP7fsUre2n3Pef2fY3te/X8Pzh9f1QvPBpxPK04fib1/aQ0/U0su6G0PTA6PrI6vp0yfNawPGAzfNtxfJ11HXVAAADf0lEQVR4nO3c2XqqMBSGYQiBAgICigxO93+XG7U+HbZVElvoot971MP8TchKQtBxAAAAAAAAAAAAAAAAAAAAAAAAANhSWjlp3mtCpfu/Z0brfJcVceT2oqDs6lU4q5B+2hbncO/EmefPJaNOs8/xLor9LDLqcHkz3iWjp6du39P8dfx1wF7mCO9Gnd3N1ysbyd2owuRRwN5ebkSVlgMCuu5ObsRhAV336E/dUkvFwICuuxLZi7oaHNCNGoEzqn4ZHrAvjAI7MTUJ6Lq1uEfR78wSuunULTak9oYB3a2wTtRDSv1HnqjJRnnGAd1K1GRjUimuIlFPYnh7Q3jfQdAwVUeLgKJqom8xSF1RBUMPXXJ/JGgbZbieudqISahWdgk7MUVfHewSFmIS6o1dwlhMuXh8/HRbEE7d8qFsE8pZ1fyBhHdOue8Jpm74YLq2S1iKqYd6bZcwEVMtnNwuYSYnodXmqd8+iRmljj/8LPg9QecYdosaOVOp3TGNsIMaZbNBXMkZpHYVsZy60WbSwDihoJn0xHzhJmdj8So1LYnCutD05Vr/FMpZz1wZvrkQVO2vVGMy2dTSxuiJyQ5jIa8HT/zBj2IhM2AfcWDdL6UVije6HdSDodQu7Ond44Cd7Lt7+tHFr+ggrxB+pFR9b3WzzSWWiU908+XbxHI9j8veqs94q/oXM8l3ptWxit+P1iCpG38GA/QdpcP8WHfbJEm67GWV6nnFu1BKv1LzGZ0AAACQQam35egnSvTy9BIrTJt8fzy09bLqusXitLFIksVi0VXZpj3s1l6Tnr7rFrYSP7c49XZttS3iILr/giaKgiLpNi/7Jjz9R6Zu+0OncKHXVon5y0M3KrvluvnNMft04aqtSrt7JlfBdrlvnF94uKF8Z1VvLXrudm9mx991BKD9cF3d/2DbPGXS5r/kGEdpZ989NzK/UtbN9D2pdL75prF502LtTJpR+asf6r43ZRtOl9HPtz8c7yxoJxqrOrT78sdCPMm3NHr/k8/fZxP8eIbtFxW2inTkiL7lZXx7wbgf7NveVH9GPOa7frvbo8+qRnxX7I9SJf6TjxZwmi7sJ9TRasaQ+xU/IR4roPGtw+8y3gVUEpKQhCQkIQlJSEISkpCEJCQhCf9IQstfEHpWNN55YupNY8QTUzWJ8fIBAAAAAAAAAAAAAAAAAAAAAABAsn90yDUZWA3XtAAAAABJRU5ErkJggg==" alt="Admin" class="rounded-circle" width="150">
-                  <div class="mt-3">
-                    <h4>{{ request.user.username }}</h4>
-                    <p class="text-secondary mb-1">{{ request.user.email }}</p>
-                    <p class="text-muted font-size-sm">{{ customer_info.street }}</p>
-                    <p class="text-muted font-size-sm">{{ customer_info.city }},{{ customer_info.pincode }}</p>
-                    <p class="text-muted font-size-sm">{{ customer_info.mobile }}</p>
-                    <!-- <button class="btn btn-primary">Follow</button>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    {% include 'grocery_management/messages.html' %}
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAYFBMVEUAqOz///8ApuxIufAApOsAouvv+v5+y/MLqu35/v/n9/3H6vrP7fsUre2n3Pef2fY3te/X8Pzh9f1QvPBpxPK04fib1/aQ0/U0su6G0PTA6PrI6vp0yfNawPGAzfNtxfJ11HXVAAADf0lEQVR4nO3c2XqqMBSGYQiBAgICigxO93+XG7U+HbZVElvoot971MP8TchKQtBxAAAAAAAAAAAAAAAAAAAAAAAAANhSWjlp3mtCpfu/Z0brfJcVceT2oqDs6lU4q5B+2hbncO/EmefPJaNOs8/xLor9LDLqcHkz3iWjp6du39P8dfx1wF7mCO9Gnd3N1ysbyd2owuRRwN5ebkSVlgMCuu5ObsRhAV336E/dUkvFwICuuxLZi7oaHNCNGoEzqn4ZHrAvjAI7MTUJ6Lq1uEfR78wSuunULTak9oYB3a2wTtRDSv1HnqjJRnnGAd1K1GRjUimuIlFPYnh7Q3jfQdAwVUeLgKJqom8xSF1RBUMPXXJ/JGgbZbieudqISahWdgk7MUVfHewSFmIS6o1dwlhMuXh8/HRbEE7d8qFsE8pZ1fyBhHdOue8Jpm74YLq2S1iKqYd6bZcwEVMtnNwuYSYnodXmqd8+iRmljj/8LPg9QecYdosaOVOp3TGNsIMaZbNBXMkZpHYVsZy60WbSwDihoJn0xHzhJmdj8So1LYnCutD05Vr/FMpZz1wZvrkQVO2vVGMy2dTSxuiJyQ5jIa8HT/zBj2IhM2AfcWDdL6UVije6HdSDodQu7Ond44Cd7Lt7+tHFr+ggrxB+pFR9b3WzzSWWiU908+XbxHI9j8veqs94q/oXM8l3ptWxit+P1iCpG38GA/QdpcP8WHfbJEm67GWV6nnFu1BKv1LzGZ0AAACQQam35egnSvTy9BIrTJt8fzy09bLqusXitLFIksVi0VXZpj3s1l6Tnr7rFrYSP7c49XZttS3iILr/giaKgiLpNi/7Jjz9R6Zu+0OncKHXVon5y0M3KrvluvnNMft04aqtSrt7JlfBdrlvnF94uKF8Z1VvLXrudm9mx991BKD9cF3d/2DbPGXS5r/kGEdpZ989NzK/UtbN9D2pdL75prF502LtTJpR+asf6r43ZRtOl9HPtz8c7yxoJxqrOrT78sdCPMm3NHr/k8/fZxP8eIbtFxW2inTkiL7lZXx7wbgf7NveVH9GPOa7frvbo8+qRnxX7I9SJf6TjxZwmi7sJ9TRasaQ+xU/IR4roPGtw+8y3gVUEpKQhCQkIQlJSEISkpCEJCQhCf9IQstfEHpWNN55YupNY8QTUzWJ8fIBAAAAAAAAAAAAAAAAAAAAAABAsn90yDUZWA3XtAAAAABJRU5ErkJggg=="
+                alt="Admin" class="rounded-circle" width="150">
+              <div class="mt-3">
+                <h4>{{ request.user.username }}</h4>
+                <p class="text-secondary mb-1">{{ request.user.email }}</p>
+                <p class="text-muted font-size-sm">{{ customer_info.street }}</p>
+                <p class="text-muted font-size-sm">{{ customer_info.city }},{{ customer_info.pincode }}</p>
+                <p class="text-muted font-size-sm">{{ customer_info.mobile }}</p>
+                <!-- <button class="btn btn-primary">Follow</button>
                     <button class="btn btn-outline-primary">Message</button> -->
-                    <div>
-                      <hr>
-                      <a href="http://google.com"><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 60px; color: black;"></i></a>
-                      <hr>
-                    </div>
-                  </div>
-                  
+                <div>
+                  <hr>
+                  <a href="http://127.0.0.1:8000/grocery_management/getMyCart/"><i class="fa fa-shopping-cart"
+                      aria-hidden="true" style="font-size: 60px; color: black;"></i></a>
+                  <hr>
                 </div>
               </div>
+
             </div>
           </div>
+        </div>
+      </div>
 
-          <div class="col-md-8">
-            <div class="card mb-3">
-              <div class="card-body">
-                <form enctype = "multipart/form-data" method = "post">
-                  {% csrf_token %}
-                  <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Street</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary"> 
-                    <!-- {{ request.user.username }} -->
-                    {{ update_form.street }}
-                  </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <form enctype="multipart/form-data" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Street</h6>
                 </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">City</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    {{ update_form.city }}
-                  </div>
+                <div class="col-sm-9 text-secondary">
+                  <!-- {{ request.user.username }} -->
+                  {{ update_form.street }}
                 </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">PinCode</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    {{ update_form.pincode }}
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Mobile</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    {{ update_form.mobile }}
-                  </div>
-                </div>
-                <hr>
-                <div class="row" style="padding-left: 200px;">
-                  <div class="col-sm-3">
-                    <button class="btn btn-danger" id = "btn1">Update</button>
-                  </div>
-                </div>
-              </form>
-                <script>
-                  document.querySelector("button").addEventListener("click",function(){
-                    alert("Are you Sure you want to update changes?");
-                  })
-                </script>
               </div>
-            </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">City</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ update_form.city }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">PinCode</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ update_form.pincode }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Mobile</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ update_form.mobile }}
+                </div>
+              </div>
+              <hr>
+              <div class="row" style="padding-left: 200px;">
+                <div class="col-sm-3">
+                  <button class="btn btn-danger" id="btn1">Update</button>
+                </div>
+              </div>
+            </form>
+            <script>
+              document.querySelector("button").addEventListener("click", function () {
+                alert("Are you Sure you want to update changes?");
+              })
+            </script>
+          </div>
+        </div>
 
-            <div class="row gutters-sm">
-              <div class="col-sm-12 mb-3">
-                <div class="card h-100">
-                  <div class="card-body">
-                    <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Order Details</i></h6>
-                    <p><small>Date 1</small></p>
-                    <div>
+        <div class="row gutters-sm">
+          <div class="col-sm-12 mb-3">
+            <div class="card h-100">
+              {% if OrderExists %}
+              <div class="card-body">
+
+                <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Order Details</i>
+                </h6>
+
+                <h6 class="d-flex align-items-center mb-3">Payment Via: Cash On delivery</h6>
+                {% endif %}
+                {% for item in orderDetails %}
+                <div class="row mb-4">
+                  <div class="col-md-5 col-lg-3 col-xl-3">
+                    <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                      <img class="img-fluid w-100" src="/static/images/{{item.item__item_name}}.jfif" alt="Sample">
                     </div>
-                    <hr>
-                    <p><small>Date 2</small></p>
+                  </div>
+                  <div class="col-md-7 col-lg-9 col-xl-9">
                     <div>
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <h5>{{item.item__item_name}}</h5>
+                          <p class="mb-3 text-muted text-uppercase small">
+                            Quantity:
+                            {{item.quantity}}
+                          </p>
+                          <p class="mb-3 text-muted text-uppercase small">
+                            Unit:
+                            {{item.item_id__quantity_type_id__variant_name}}
+                          </p>
+                          <p class="mb-2 text-muted text-uppercase small">
+                            Color:
+                            {{item.item_id__colour_type_id__colour_name}}
+                          </p>
+                          <p class="mb-3 text-muted text-uppercase small">
+                            Size:
+                            {{item.item_id__size_type_id__size_name}}</p>
+                        </div>
+
+
+
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <p class="mb-0"><span><strong id="summary">{{item.item_id__price}}₹</strong></span>
+                        </p class="mb-0">
+                      </div>
                     </div>
-                    <hr>
-                    <p><small>Date 3</small></p>
-                    <div>
-                    </div>
-                    <hr>
-                    <p><small>Date 4</small></p>
-                    <div>
-                    </div>
-                    <hr>
-                    <p><small>Date 5</small></p>
-                    <div>
-                    </div>
-                    <hr>
                   </div>
                 </div>
+
+                {% endfor %}
+                <div>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
   </div>
+</div>
 {% endblock %}
