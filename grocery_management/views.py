@@ -98,11 +98,14 @@ def isPhoneValid(mobile):
 def validateRegisterForm(request, username, email, password, street, city, pincode, mobile):
     usernameExists = User.objects.filter(username=username).exists()
     if usernameExists:
-        messages.info(request, 'A User with the same username already exists')
+        messages.info(
+            request, 'A User with the same username already exists', extra_tags='register')
     if not check_email(email):
-        messages.info(request, 'Please Provide Valid Email')
+        messages.info(request, 'Please Provide Valid Email',
+                      extra_tags='register')
     if not isPhoneValid(mobile):
-        messages.info(request, 'Please provide Valid Mobile No')
+        messages.info(request, 'Please provide Valid Mobile No',
+                      extra_tags='register')
     if usernameExists or not check_email(email) or not isPhoneValid(mobile):
         return 0
     return 1
