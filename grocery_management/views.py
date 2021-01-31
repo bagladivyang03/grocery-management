@@ -90,7 +90,10 @@ def isPhoneValid(mobile):
     regex = "/[^0-9 +\-]/"
     contact_validator_regex = '^[-+]?[0-9]+$'
     if re.search(contact_validator_regex, mobile):
-        return 1
+        if len(mobile) == 10:
+            return 1
+        else:
+            return 0
     else:
         return 0
 
