@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from grocery_management.forms import UserForm, CustomerInfoForm, ContactUsForm, UpdateInfoForm
-from grocery_management.models import CustomerRegistration
+from grocery_management.models import CustomerRegistration,Item
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -90,7 +90,10 @@ def isPhoneValid(mobile):
     regex = "/[^0-9 +\-]/"
     contact_validator_regex = '^[-+]?[0-9]+$'
     if re.search(contact_validator_regex, mobile):
-        return 1
+        if len(mobile) == 10:
+            return 1
+        else:
+            return 0
     else:
         return 0
 
@@ -106,7 +109,10 @@ def validateRegisterForm(request, username, email, password, street, city, pinco
     if not isPhoneValid(mobile):
         messages.info(request, 'Please provide Valid Mobile No',
                       extra_tags='register')
-    if usernameExists or not check_email(email) or not isPhoneValid(mobile):
+    if len(pincode)!=6:
+        messages.info(request, 'Please provide Valid Pincode',
+                      extra_tags='register')
+    if usernameExists or not check_email(email) or not isPhoneValid(mobile) or len(pincode)!=6:
         return 0
     return 1
 
@@ -306,6 +312,8 @@ def homepage(request):
 
 @ login_required
 def checkout(request):
+    customer_info = CustomerRegistration.objects.get(
+        user_id=request.user.id)
     if not request.POST.get('username'):
         messages.info(request, 'Plese Enter Username', extra_tags='checkout')
     if not request.POST.get('email'):
@@ -321,7 +329,7 @@ def checkout(request):
     if not request.POST.get('state'):
         messages.info(request, 'Plese Enter State', extra_tags='checkout')
     if not request.POST.get('username') or not request.POST.get('email') or not request.POST.get('pincode') or not request.POST.get('street') or not request.POST.get('city') or not request.POST.get('mobile') or not request.POST.get('state') or not request.POST.get('state'):
-        return render(request, 'grocery_management/cart.html',  {})
+        return render(request, 'grocery_management/cart.html',{'customer_info':customer_info})
     OrderExists = Order.objects.filter(user=request.user.id).exists()
     userCart = CartItems.objects.filter(
         user_id=request.user.id).prefetch_related().values('id', 'price', 'quantity', 'cart_id', 'cart_id__total_price', 'user_id', 'item_id', 'item__item_name', 'item__image', 'item_id__price', 'item_id__colour_type_id__colour_name', 'item_id__quantity_type_id__variant_name', 'item_id__size_type_id__size_name', 'item_id__description', 'item_id__quantity_available')
@@ -349,7 +357,11 @@ def checkout(request):
         orderObj.save()
     getOrderObj = Order.objects.get(user=request.user.id)
     for item in cartItemsDetails:
-        print(item)
+        item_up = Item.objects.get(
+        item_name = item['item__item_name'],
+        )
+        item_up.quantity_available = item_up.quantity_available - item['quantity']
+        item_up.save()
         getitem = Item.objects.get(id=item['item_id'])
         orderDetailsObj = orderDetails()
         orderDetailsObj.user = request.user
