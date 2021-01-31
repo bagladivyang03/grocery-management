@@ -11,7 +11,7 @@ class CustomerRegistration(models.Model):
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     pincode = models.CharField(max_length=6)
-    mobile = models.CharField(max_length=10,unique=True)
+    mobile = models.CharField(max_length=10)
 
     def __str__(self):
         return self.user.username
@@ -91,11 +91,36 @@ class CartItems(models.Model):
         return str(self.user.username)+" "+str(self.item.item_name)
 
 
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ordered_date = models.DateField(auto_now_add=True)
+    pincode = models.CharField(max_length=6)
+    street = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=40)
+    country = models.CharField(max_length=40)
+    contact_no = models.CharField(max_length=10)
+    payment_method = models.CharField(max_length=20, default='Cash')
+
+    def __str__(self):
+        return str(self.user.username)+" "+str(self.contact_no)
+
+
+class orderDetails(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+
+    def __str__(self):
+        return str(self.user.username)+" "+str(self.item.item_name)
+
+
 @receiver(pre_save, sender=CartItems)
 def recalculate_total_price(sender, **kwargs):
     cart_items = kwargs['instance']
     price_of_item = Item.objects.get(id=cart_items.item.id)
-    cart_items.price = cart_items.quantity * float(price_of_item.price)
+    cart_items.price = float(price_of_item.price)
     total_cart_item = CartItems.objects.filter(user=cart_items.user)
     cart = Cart.objects.get(id=cart_items.cart.id)
     cart.total_price = cart.total_price + cart_items.price

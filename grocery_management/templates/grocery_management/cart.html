@@ -3,7 +3,6 @@
 active
 {% endblock %}
 {% block body_block %}
-
 <div class="page-heading about-heading header-text" style="background-image: url(/static/images/cart.jpg);">
      <div class="container">
           <div class="row">
@@ -16,7 +15,14 @@ active
           </div>
      </div>
 </div>
-
+{% for message in messages %} {% if "checkout" in message.tags %}
+<div class="alert {{ message.tags }} alert-dismissible" role="alert">
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+     </button>
+     {{ message }}
+</div>
+{% endif %} {% endfor %}
 <div class="products call-to-action">
      <div class="container">
           <ul class="list-group list-group-flush">
@@ -35,7 +41,7 @@ active
                                                   <div class="col-md-5 col-lg-3 col-xl-3">
                                                        <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
                                                             <img class="img-fluid w-100"
-                                                                 src="/static/images/{{item.item__item_name}}.jpg"
+                                                                 src="/static/images/{{item.item__item_name}}.jfif"
                                                                  alt="Sample">
                                                        </div>
                                                   </div>
@@ -45,7 +51,13 @@ active
                                                                  <div>
                                                                       <h5>{{item.item__item_name}}</h5>
                                                                       <p class="mb-3 text-muted text-uppercase small">
-                                                                           {{item.quantity}} -
+                                                                           Quantity:
+                                                                           {{item.quantity}}
+
+                                                                      </p>
+                                                                      <p class="mb-3 text-muted text-uppercase small">
+                                                                           Unit:
+
                                                                            {{item.item_id__quantity_type_id__variant_name}}
                                                                       </p>
                                                                       <p class="mb-2 text-muted text-uppercase small">
@@ -57,7 +69,7 @@ active
                                                                            {{item.item_id__size_type_id__size_name}}</p>
                                                                  </div>
                                                                  <div>
-                                                                      <div
+                                                                      <!-- <div
                                                                            class="def-number-input number-input safari_only mb-0 w-100">
                                                                            <button
                                                                                 onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
@@ -67,7 +79,16 @@ active
                                                                            <button
                                                                                 onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
                                                                                 class="plus increase"></button>
-                                                                      </div>
+                                                                      </div> -->
+                                                                      <!-- <div class="quantity">
+                                                                           <button class="plus-btn" type="button" name="button">
+                                                                             <img src="plus.svg" alt="" />
+                                                                           </button>
+                                                                           <input type="text" name="name" value="1">
+                                                                           <button class="minus-btn" type="button" name="button">
+                                                                             <img src="minus.svg" alt="" />
+                                                                           </button>
+                                                                         </div> -->
                                                                       <small id="passwordHelpBlock"
                                                                            class="form-text text-muted text-center">
                                                                            (Note, 1 piece)
@@ -170,7 +191,7 @@ active
 
                                    <!-- Card -->
 
-                                   
+
 
                               </div>
                               <!--Grid column-->
@@ -180,23 +201,23 @@ active
 
                     </section>
 
-                    {% for item in cartItemsDetails %}
+                    <!-- {% for item in cartItemsDetails %}
                     <div class="table">
 
                          <p>{{item}}</p>
                          <p>{{total_price}}</p>
                          <p>{{customer_info}}</p>
                          <p>1</p>
-                         {% endfor %}
-                         <div class="row">
-                              <div class="col-6">
-                                   <em>Sub-total</em>
-                              </div>
-
-                              <div class="col-6 text-right">
-                                   <strong>{{total_amount}}₹</strong>
-                              </div>
+                         {% endfor %} -->
+                    <div class="row">
+                         <div class="col-6">
+                              <em>Sub-total</em>
                          </div>
+
+                         <div class="col-6 text-right">
+                              <strong>{{total_amount}}₹</strong>
+                         </div>
+                    </div>
                </li>
 
                <li class="list-group-item">
@@ -228,7 +249,8 @@ active
 
           <div class="inner-content">
                <div class="contact-form">
-                    <form action="#">
+                    <form method="POST" action="addToOrder/">
+                         {% csrf_token %}
                          <div class="row">
                               <div class="col-sm-6 col-xs-12">
                                    <div class="form-group">
@@ -249,7 +271,8 @@ active
                               <div class="col-sm-6 col-xs-12">
                                    <div class="form-group">
                                         <label class="control-label">Name:</label>
-                                        <input type="text" value="{{request.user.username}}" class="form-control">
+                                        <input type="text" name='username' value="{{request.user.username}}"
+                                             class="form-control">
                                    </div>
                               </div>
                          </div>
@@ -257,13 +280,15 @@ active
                               <div class="col-sm-6 col-xs-12">
                                    <div class="form-group">
                                         <label class="control-label">Email:</label>
-                                        <input type="text" value="{{request.user.email}}" class="form-control">
+                                        <input type="text" name="email" value="{{request.user.email}}"
+                                             class="form-control">
                                    </div>
                               </div>
                               <div class="col-sm-6 col-xs-12">
                                    <div class="form-group">
                                         <label class="control-label">Phone:</label>
-                                        <input type="text" value="{{customer_info.mobile}}" class="form-control">
+                                        <input type="text" name='mobile' value="{{customer_info.mobile}}"
+                                             class="form-control">
                                    </div>
                               </div>
                          </div>
@@ -271,13 +296,15 @@ active
                               <div class="col-sm-6 col-xs-12">
                                    <div class="form-group">
                                         <label class="control-label">Address 1:</label>
-                                        <input type="text" value="{{customer_info.street}}" class="form-control">
+                                        <input type="text" name='street' value="{{customer_info.street}}"
+                                             class="form-control">
                                    </div>
                               </div>
                               <div class="col-sm-6 col-xs-12">
                                    <div class="form-group">
                                         <label class="control-label">Address 2:</label>
-                                        <input type="text" value="{{customer_info.pincode}}" class="form-control">
+                                        <input type="text" name='pincode' value="{{customer_info.pincode}}"
+                                             class="form-control">
                                    </div>
                               </div>
                          </div>
@@ -285,7 +312,8 @@ active
                               <div class="col-sm-6 col-xs-12">
                                    <div class="form-group">
                                         <label class="control-label">City:</label>
-                                        <input type="text" value="{{customer_info.city}}" class="form-control">
+                                        <input type="text" name='city' value="{{customer_info.city}}"
+                                             class="form-control">
                                    </div>
                               </div>
                               <div class="col-sm-6 col-xs-12">
@@ -293,7 +321,8 @@ active
                                         <label class="control-label">State:</label>
                                         <select name="state" id="state" class="form-control">
                                              <option value="Andhra Pradesh">Andhra Pradesh</option>
-                                             <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                             <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands
+                                             </option>
                                              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
                                              <option value="Assam">Assam</option>
                                              <option value="Bihar">Bihar</option>
@@ -328,7 +357,7 @@ active
                                              <option value="Uttar Pradesh">Uttar Pradesh</option>
                                              <option value="Uttarakhand">Uttarakhand</option>
                                              <option value="West Bengal">West Bengal</option>
-                                             </select>
+                                        </select>
                                    </div>
                               </div>
                          </div>
@@ -342,7 +371,7 @@ active
                               <div class="col-sm-6 col-xs-12">
                                    <div class="form-group">
                                         <label class="control-label">Country:</label>
-                                        <select class="form-control">
+                                        <select name='country' class="form-control">
                                              <option value="">India</option>
                                         </select>
                                    </div>
@@ -356,9 +385,9 @@ active
 
                                         <select class="form-control">
                                              <option value="">-- Choose --</option>
-                                             <option value="bank">Bank account</option>
+
                                              <option value="cash">Cash</option>
-                                             <option value="paypal">PayPal</option>
+
                                         </select>
                                    </div>
                               </div>

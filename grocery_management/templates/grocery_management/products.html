@@ -1,9 +1,6 @@
-{% extends 'grocery_management/base.html' %} 
-{% block body2 %}
-active
-{% endblock %}
+<!DOCTYPE html>
 
-{% block body_block %}
+{% extends 'grocery_management/base.html' %} {% block body_block %}
 
 <div
   class="page-heading about-heading header-text"
@@ -13,7 +10,7 @@ active
     <div class="row">
       <div class="col-md-12">
         <div class="text-content">
-          <h4>Lorem ipsum dolor sit amet</h4>
+          <h4>Groceries At Your Doorstep</h4>
           <h2>Products</h2>
           <br />
           <!-- <form class="example" action="action_page.php">
@@ -21,14 +18,20 @@ active
                 <button type="submit"><i class="fa fa-search"></i></button>
               </form> -->
           <div class="active-cyan-4 mb-4">
-            <form action="post" action="search/{{string}}">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button type="submit">Search</button>
+            <form method="POST" action="search/">
+              {% csrf_token %}
+              <div class="row">
+                <input
+                  name="searchString"
+                  class="form-control col-md-10"
+                  type="text"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button class="btn btn-secondary col-md-2" type="submit">
+                  Search
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -36,32 +39,30 @@ active
     </div>
   </div>
 </div>
-
+{% for message in messages %} {% if "addToCart" in message.tags %}
+<div class="alert {{ message.tags }} alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  {{ message }}
+</div>
+{% endif %} {% endfor %}
 <div class="products">
   <div class="container">
     <div class="row">
       {% for item in Items %}
       <div class="col-md-4">
         <div class="product-item">
-          <a href="product-details.html"><img src="/static/images/{{item.item_name}}.jpg" alt=""/></a>
+          <a href="product-details.html"
+            ><img src="/static/images/{{item.item_name}}.jfif" alt=""
+          /></a>
           <div class="down-content">
-            <a href="product-details.html"><h4>{{item.item_name}}</h4></a>
-            <h6>
-               '₹{{item.price}}'
-            </h6>
+            <a href="product-details.html">
+              <h4>{{item.item_name}}</h4>
+            </a>
+            <h6>'₹{{item.price}}'</h6>
             <p>{{item.description}}</p>
-            <div class="row">
-              <div class="form-group">
-                <label for="sel1">Select quantity</label>
-                <select class="form-control" id="sel1">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
-                <p>{{item.quantity_type_id}}</p>
-              </div>
-            </div>
+            <div class="row"></div>
             <form method="get" action="addToCart/{{item.id}}">
               <button type="submit" class="btb btn-primary btn-block">
                 Add to Cart
