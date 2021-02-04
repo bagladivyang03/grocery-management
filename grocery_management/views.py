@@ -35,6 +35,7 @@ class cartItemsView(APIView):
                 res['item_id__size_type_id__size_name'] = 'Not Applicable'
             jsonRes.append(res)
         cartItemsDetails = jsonRes
+        print(cartItemsDetails)
         lengthofCartItemDetails = len(jsonRes)
         if lengthofCartItemDetails:
             total_amount = jsonRes[lengthofCartItemDetails -
@@ -73,7 +74,7 @@ class ProductView(TemplateView):
 
 class ItemView(APIView):
     def get(self, request):
-        getAllItems = Item.objects.all()
+        getAllItems = Item.objects.filter(quantity_available__gt=0)
         itemset = ItemSerializer(getAllItems, many=True)
         return render(request, 'grocery_management/products.html', {'Items': getAllItems})
 
@@ -222,6 +223,8 @@ def view_profile(request):
             user_id=request.user.id).prefetch_related().values('id', 'quantity', 'order_id', 'order_id__pincode', 'order_id__city', 'order_id__state', 'order_id__contact_no', 'order_id__payment_method', 'order_id__street', 'user_id', 'item__item_name', 'item__image', 'item_id__price', 'item_id__colour_type_id__colour_name', 'item_id__quantity_type_id__variant_name', 'item_id__size_type_id__size_name', 'item_id__description', 'item_id__quantity_available')
         jsonRes = []
         for res in userOrder:
+            print(res)
+            print()
             if res['item_id__colour_type_id__colour_name'] == None:
                 res['item_id__colour_type_id__colour_name'] = 'Not Applicable'
             if res['item_id__quantity_type_id__variant_name'] == None:
@@ -256,6 +259,7 @@ def addToCart(request, id):
         cart_obj.total_price = 0
         cart_obj.save()
     userCartReference = Cart.objects.get(user=request.user.id)
+    print(userCartReference)
     getitem = Item.objects.get(id=id)
     ifItemAlreadyExists = CartItems.objects.filter(item_id=id).exists()
     if not ifItemAlreadyExists:
@@ -277,16 +281,35 @@ def addToCart(request, id):
 @ login_required
 def removeItemFromCart(request, id):
     item = CartItems.objects.get(user_id=request.user.id, id=id)
+    print(item.quantity)
+    print()
     userCart = Cart.objects.get(user=request.user.id)
-    userCart.total_price = userCart.total_price - item.price
+    print(userCart.total_price)
+    userCart.total_price = userCart.total_price - (item.quantity*item.price)
+    print(userCart.total_price)
     userCart.save()
+    print(userCart)
     item.delete()
+    # if(item.quantity > 1):
+    #     userCart.total_price = userCart.total_price - item.price
+    #     print(userCart.total_price)
+    #     userCart.save()
+    #     item.quantity = item.quantity - 1;
+    #     item.save()
+    # else:   
+    #     print(userCart.total_price)
+    #     userCart.total_price = userCart.total_price - item.price
+    #     print(userCart.total_price)
+    #     userCart.save()
+    #     print(userCart)
+    #     item.delete()
     return redirect('grocery_management:getMyCart')
 
 
 @ login_required
 def getitems(request):
-    getAllItems = Item.objects.all()
+    getAllItems = Item.objects.filter(Item__quantity_available__gt=0)
+    print(getAllItems)
     itemset = ItemSerializer(getAllItems, many=True)
     return render(request, 'grocery_management/products.html', {'Items': getAllItems})
 
@@ -305,7 +328,7 @@ def search(request):
 
 @ login_required
 def homepage(request):
-    getAllItems = Item.objects.all()[:6]
+    getAllItems = Item.objects.filter(quantity_avilable__gt=0)[:6]
     itemset = ItemSerializer(getAllItems, many=True)
     return render(request, 'grocery_management/homepage.html', {'Items': getAllItems})
 
@@ -315,19 +338,19 @@ def checkout(request):
     customer_info = CustomerRegistration.objects.get(
         user_id=request.user.id)
     if not request.POST.get('username'):
-        messages.info(request, 'Plese Enter Username', extra_tags='checkout')
+        messages.info(request, 'Please Enter Username', extra_tags='checkout')
     if not request.POST.get('email'):
-        messages.info(request, 'Plese Enter Email', extra_tags='checkout')
+        messages.info(request, 'Please Enter Email', extra_tags='checkout')
     if not request.POST.get('pincode'):
-        messages.info(request, 'Plese Enter Pincode', extra_tags='checkout')
+        messages.info(request, 'Please Enter Pincode', extra_tags='checkout')
     if not request.POST.get('street'):
-        messages.info(request, 'Plese Enter Street', extra_tags='checkout')
+        messages.info(request, 'Please Enter Street', extra_tags='checkout')
     if not request.POST.get('city'):
-        messages.info(request, 'Plese Enter City', extra_tags='checkout')
+        messages.info(request, 'Please Enter City', extra_tags='checkout')
     if not request.POST.get('mobile'):
-        messages.info(request, 'Plese Enter Mobile', extra_tags='checkout')
+        messages.info(request, 'Please Enter Mobile', extra_tags='checkout')
     if not request.POST.get('state'):
-        messages.info(request, 'Plese Enter State', extra_tags='checkout')
+        messages.info(request, 'Please Enter State', extra_tags='checkout')
     if not request.POST.get('username') or not request.POST.get('email') or not request.POST.get('pincode') or not request.POST.get('street') or not request.POST.get('city') or not request.POST.get('mobile') or not request.POST.get('state') or not request.POST.get('state'):
         return render(request, 'grocery_management/cart.html',{'customer_info':customer_info})
     OrderExists = Order.objects.filter(user=request.user.id).exists()
@@ -357,6 +380,8 @@ def checkout(request):
         orderObj.save()
     getOrderObj = Order.objects.get(user=request.user.id)
     for item in cartItemsDetails:
+        print(item)
+        print()
         item_up = Item.objects.get(
         item_name = item['item__item_name'],
         )
@@ -367,6 +392,7 @@ def checkout(request):
         orderDetailsObj.user = request.user
         orderDetailsObj.order = getOrderObj
         orderDetailsObj.item = getitem
+        orderDetailsObj.quantity = item['quantity']
         orderDetailsObj.save()
     Cart.objects.filter(user_id=request.user.id).delete()
     context = {}
