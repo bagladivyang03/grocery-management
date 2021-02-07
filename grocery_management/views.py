@@ -328,7 +328,7 @@ def search(request):
 
 @ login_required
 def homepage(request):
-    getAllItems = Item.objects.filter(quantity_avilable__gt=0)[:6]
+    getAllItems = Item.objects.filter(quantity_available__gt=0)[:6]
     itemset = ItemSerializer(getAllItems, many=True)
     return render(request, 'grocery_management/homepage.html', {'Items': getAllItems})
 

@@ -36,7 +36,7 @@ class ContactUsForm(forms.ModelForm):
             'fullname': forms.TextInput(attrs={'class': 'form-control', 'id': 'name', 'placeholder': 'Full Name'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'id': 'email', 'placeholder': 'E-Mail Address'}),
             'subject': forms.TextInput(attrs={'class': 'form-control', 'id': 'subject', 'placeholder': 'Subject'}),
-            'message': forms.TextInput(attrs={'rows': '6', 'class': 'form-control', 'id': 'message', 'placeholder': 'Your Message'}),
+            'message': forms.Textarea(attrs={'rows': 10,'class': 'form-control', 'id': 'message', 'placeholder': 'Your Message'}),
         }
 
 
