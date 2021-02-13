@@ -27,5 +27,5 @@ urlpatterns = [
          login_required(views.removeItemFromCart), name='remvoeItemFromCart'),
     path('getAllItems/search/', login_required(views.search), name='search'),
     path('getAllProducts/', login_required(views.getitems), name='getProducts'),
-    path('addToOrder/', login_required(views.checkout), name='addToOrder')
+    path('addToOrder/', login_required(views.checkout), name='addToOrder'),
 ]

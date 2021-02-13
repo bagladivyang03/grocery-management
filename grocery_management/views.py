@@ -17,7 +17,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import json
 from django.core import serializers
-from datetime import datetime
+from datetime import datetime,timedelta
 import re
 
 
@@ -101,11 +101,15 @@ def isPhoneValid(mobile):
 
 def validateRegisterForm(request, username, email, password, street, city, pincode, mobile):
     usernameExists = User.objects.filter(username=username).exists()
+    emailExists = User.objects.filter(email=email).exists()
     if usernameExists:
         messages.info(
             request, 'A User with the same username already exists', extra_tags='register')
     if not check_email(email):
         messages.info(request, 'Please Provide Valid Email',
+                      extra_tags='register')
+    if emailExists:
+            messages.info(request, 'A User with the same E-Mail already exists',
                       extra_tags='register')
     if not isPhoneValid(mobile):
         messages.info(request, 'Please provide Valid Mobile No',
@@ -113,7 +117,7 @@ def validateRegisterForm(request, username, email, password, street, city, pinco
     if len(pincode)!=6:
         messages.info(request, 'Please provide Valid Pincode',
                       extra_tags='register')
-    if usernameExists or not check_email(email) or not isPhoneValid(mobile) or len(pincode)!=6:
+    if emailExists or usernameExists or not check_email(email) or not isPhoneValid(mobile) or len(pincode)!=6:
         return 0
     return 1
 
