@@ -55,6 +55,9 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 
+INCLUDE_REGISTER_URL = True
+INCLUDE_AUTH_URLS = True
+
 # Application definition
 
 INSTALLED_APPS = [
