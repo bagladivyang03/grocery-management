@@ -56,7 +56,7 @@ active
       <div class="col-md-4">
         <div class="product-item">
           <a href="product-details.html"
-            ><img src="/static/images/{{item.item_name}}.jfif" alt=""
+            ><img src="/static/images/{{item.item_name}}.jpg" alt=""
           /></a>
           <div class="down-content">
             <a href="product-details.html">
@@ -74,6 +74,16 @@ active
         </div>
       </div>
       {% endfor %}
+      <div class="col-md-12">
+        <ul class="pages">
+          {% if Items.has_previous %}
+          <li><a href="?page={{ Items.previous_page_number}}"><i class="fa fa-angle-double-left"></i></a></li>
+          {% endif %}
+          {% if Items.has_next %}
+          <li><a href="?page={{ Items.next_page_number}}"><i class="fa fa-angle-double-right"></i></a></li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
   </div>
 </div>
