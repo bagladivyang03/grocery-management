@@ -19,7 +19,7 @@ import json
 from django.core import serializers
 from datetime import datetime,timedelta
 import re
-
+from django.core.paginator import Paginator
 
 class cartItemsView(APIView):
     def get(self, request):
@@ -74,7 +74,10 @@ class ProductView(TemplateView):
 
 class ItemView(APIView):
     def get(self, request):
-        getAllItems = Item.objects.filter(quantity_available__gt=0)
+        getAllItem = Item.objects.filter(quantity_available__gt=0)
+        paginator = Paginator(getAllItem, 6)
+        page_number = request.GET.get('page')
+        getAllItems = paginator.get_page(page_number)
         itemset = ItemSerializer(getAllItems, many=True)
         return render(request, 'grocery_management/products.html', {'Items': getAllItems})
 
