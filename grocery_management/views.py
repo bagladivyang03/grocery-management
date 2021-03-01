@@ -220,7 +220,7 @@ def view_profile(request):
     customer_info = CustomerRegistration.objects.get(user_id=request.user.id)
     update_form = UpdateInfoForm(instance=customer_info)
     if request.method == "POST":
-        update_form = UpdateInfoForm(request.POST, instance=customer_info)
+        update_form = UpdateInfoForm(request.POST,request.FILES, instance=customer_info)
         if update_form.is_valid():
             update_form.save()
             messages.success(

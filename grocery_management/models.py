@@ -7,7 +7,8 @@ from django.dispatch import receiver
 
 class CustomerRegistration(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
+    profile_pic = models.ImageField(null = True,blank=True)
+    
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     pincode = models.CharField(max_length=6)
