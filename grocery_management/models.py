@@ -100,6 +100,7 @@ class Order(models.Model):
     state = models.CharField(max_length=40)
     country = models.CharField(max_length=40)
     contact_no = models.CharField(max_length=10)
+    total_amount = models.IntegerField(default = 0)
     payment_method = models.CharField(max_length=20, default='Cash')
 
     def __str__(self):

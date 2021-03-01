@@ -33,3 +33,18 @@ def sendMailToGMS(name, email, subject, message):
         fail_silently=False,
 
     )
+
+
+def OrderDetailtoCustomer(name,send_to,tot_amount,expected_date):
+    subject = "Order Placed Succesfully !"
+    message = "Hello "+name+"! \n\nWe have successfully received your Order.\n\nWe will get delivered your order by or before "+expected_date+".\nPay "+str(tot_amount)+"₹ at time of delivery.\nRegards\n- GMS"
+    try:
+        send_mail(
+            subject,
+            message,
+            env("EMAIL"),
+            [send_to],
+            fail_silently=False,
+        )
+    except:
+        print("EMAIL NOT SENT")

@@ -188,6 +188,7 @@ def user_login(request):
 def user_logout(request):
     request.session.flush()
     logout(request)
+    messages.info(request, 'Logout Succesfull!!')
     return HttpResponseRedirect(reverse('grocery_management:login'))
 
 
@@ -374,6 +375,8 @@ def checkout(request):
         jsonRes.append(res)
     cartItemsDetails = jsonRes
     ordered_date = str(datetime.today()).split()[0]
+    tot_price = Cart.objects.get(user=request.user.id).total_price
+    print(tot_price)
     if not OrderExists:
         orderObj = Order()
         orderObj.user = request.user
@@ -386,6 +389,9 @@ def checkout(request):
         orderObj.country = request.POST.get('country')
         orderObj.save()
     getOrderObj = Order.objects.get(user=request.user.id)
+    tot_price = tot_price+((tot_price*5)/100)
+    getOrderObj.total_amount = tot_price
+    getOrderObj.save()
     for item in cartItemsDetails:
         print(item)
         print()
@@ -401,6 +407,7 @@ def checkout(request):
         orderDetailsObj.item = getitem
         orderDetailsObj.quantity = item['quantity']
         orderDetailsObj.save()
+    mailhandler.OrderDetailtoCustomer(request.user.username,request.user.email,tot_price,str(datetime.today()+timedelta(7)).split()[0])
     Cart.objects.filter(user_id=request.user.id).delete()
     context = {}
     return render(request, 'grocery_management/cart.html',  context)
