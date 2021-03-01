@@ -43,7 +43,7 @@ class ContactUsForm(forms.ModelForm):
 class UpdateInfoForm(forms.ModelForm):
     class Meta():
         model = CustomerRegistration
-        fields = ('street', 'city', 'pincode', 'mobile')
+        fields = ('street', 'city', 'pincode', 'mobile','profile_pic')
         widgets = {
             'street': forms.TextInput(attrs={'class': 'form-control no-border'}),
             'city': forms.TextInput(attrs={'class': 'form-control no-border'}),

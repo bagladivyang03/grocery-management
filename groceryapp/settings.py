@@ -165,6 +165,9 @@ STATIC_ROOT= '/static/'
 
 LOGIN_URL = '/grocery_management/login'
 
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'static/images')
+
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # EMAIL_HOST = 'in-v3.mailjet.com'
