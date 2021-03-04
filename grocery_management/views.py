@@ -331,7 +331,8 @@ def search(request):
         for res in itemset:
             Items.append(res)
         return render(request, 'grocery_management/products.html',  {'Items': Items})
-    return render(request, 'grocery_management/products.html',  {})
+    return redirect('grocery_management:getAllItems')
+    # return render(request, 'grocery_management/products.html',  {})
 
 
 @ login_required
@@ -410,4 +411,5 @@ def checkout(request):
     mailhandler.OrderDetailtoCustomer(request.user.username,request.user.email,tot_price,str(datetime.today()+timedelta(7)).split()[0])
     Cart.objects.filter(user_id=request.user.id).delete()
     context = {}
-    return render(request, 'grocery_management/cart.html',  context)
+    return redirect('grocery_management:getMyCart')
+    # return render(request, 'grocery_management/cart.html',  context)
