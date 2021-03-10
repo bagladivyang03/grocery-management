@@ -43,7 +43,7 @@ class cartItemsView(APIView):
         else:
             total_amount = 0
         total_amount_with_gst = total_amount+((total_amount*5)/100)
-        expected_delivery = str(datetime.today()).split()[0]
+        expected_delivery = str(datetime.today()+timedelta(7)).split()[0]
         customer_info = CustomerRegistration.objects.get(
             user_id=request.user.id)
         context = {'cartItemsDetails': cartItemsDetails,
