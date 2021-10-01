@@ -33,7 +33,7 @@ SECRET_KEY = '2!=lz&7)zr5)lu$83^ayj1z$ida^j%35kaopqd964nd^hh6rr1'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = 'grocery_management.CustomUser'
 
 from django.contrib.messages import constants as messages
 
@@ -101,15 +101,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'groceryapp.wsgi.application'
 
-
+AUTHENTICATION_BACKENDS = (
+    ('django.contrib.auth.backends.ModelBackend'),
+)
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'groceryapp',
-        'USER': 'djangogrocery',
+        'NAME': 'groceryapp1',
+        'USER': 'djnagog',
         'PASSWORD': 'abc123',
         'HOST': 'localhost',
         'PORT': '3306',
